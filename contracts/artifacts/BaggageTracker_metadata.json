@@ -17,6 +17,37 @@
 				"type": "constructor"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "baggageId",
+						"type": "string"
+					}
+				],
+				"name": "addBaggageToSecurity",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string[]",
+						"name": "baggageIds",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "locations",
+						"type": "string[]"
+					}
+				],
+				"name": "checkInBaggage",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "getBaggage",
 				"outputs": [
@@ -31,6 +62,11 @@
 								"internalType": "uint256",
 								"name": "last_scanned_timestamp",
 								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "location",
+								"type": "string"
 							},
 							{
 								"internalType": "enum BaggageTracker.BaggageStatus",
@@ -100,11 +136,11 @@
 	},
 	"sources": {
 		"contracts/BaggageTracker.sol": {
-			"keccak256": "0xc73db093fac823b706adde6d65e962c4d6c3e846c19f33d83b92f386683478b0",
+			"keccak256": "0x89cf13a3fd7ac8531e9b41ddad402988752e1f76b137becc39ea024c3e37f0c7",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://49c9aa044188bca4767ed045887f12ac2c36bc2d42ac71939f3d82e35ef811c2",
-				"dweb:/ipfs/QmbQewbDdtszn4LTSxQjqnpWAdRwbRiazrGnWBfjFuhtMf"
+				"bzz-raw://9cdf7cfa22cb2abd899be9a7dbafb7392c5d2666d86807e1dfb809542560b052",
+				"dweb:/ipfs/QmV7EpHbAsBLqoPcbiypFQ1cZmPrkcxsAkZcxaR5khx2QD"
 			]
 		},
 		"hardhat/console.sol": {
