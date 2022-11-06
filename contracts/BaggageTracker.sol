@@ -4,8 +4,8 @@ import "hardhat/console.sol";
 
 contract BaggageTracker {
     enum CustomerStatus {
-        BOARDED,
-        CHECKIN
+        CHECKIN,
+        BOARDED
     }
     enum BaggageStatus {
         CHECK_IN,
@@ -40,7 +40,8 @@ contract BaggageTracker {
         //Initialize the list of customers for this journey
         for (uint256 i = 0; i < customer_ids.length; i++) {
             customers.push(
-                Customer({id: customer_ids[i], status: CustomerStatus.CHECKIN})
+                //Customer({id: customer_ids[i], status: CustomerStatus.CHECKIN})
+                Customer(customer_ids[i], CustomerStatus.CHECKIN)
             );
         }
     }
@@ -72,8 +73,21 @@ contract BaggageTracker {
 
     function addBaggageToSecurity(string memory baggageId) public {
 
+        require(baggageMapping[baggageId].status == BaggageStatus.CHECK_IN);
+
         baggageMapping[baggageId].status = BaggageStatus.SECURITY;
         baggageMapping[baggageId].last_scanned_timestamp = block.timestamp;
+    }
+
+    function addBaggageToBoarding(string memory baggageId) public {
+        require(baggageMapping[baggageId].status == BaggageStatus.SECURITY);
+
+        baggageMapping[baggageId].status = BaggageStatus.BOARDED;
+        baggageMapping[baggageId].last_scanned_timestamp = block.timestamp;
+    }
+
+    function getBaggageStatus(string memory baggageId) public view returns (BaggageStatus) {
+        return baggageMapping[baggageId].status;
     }
 
     function getCustomers() public view returns (Customer[] memory) {
