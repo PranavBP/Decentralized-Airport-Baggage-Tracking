@@ -26,7 +26,8 @@ contract BaggageTracker {
         BaggageStatus status;
     }
 
-    address private baggageOfficial;
+    address private boardingOfficial;
+    address[] private baggageOfficials;
 
     Customer[] private customers;
     Baggage[] private baggage;
@@ -35,7 +36,7 @@ contract BaggageTracker {
 
     //The baggage official is allowed to create a new contract, providing the list of customers as the input
     constructor(string[] memory customer_ids) {
-        baggageOfficial = msg.sender;
+        boardingOfficial = msg.sender;
 
         //Initialize the list of customers for this journey
         for (uint256 i = 0; i < customer_ids.length; i++) {
@@ -54,6 +55,7 @@ contract BaggageTracker {
         //Length of baggage IDs and their locations must be equal.
         require(baggageIds.length == locations.length);
 
+        require(msg.sender == boardingOfficial);
 
         //Adds the baggage to the baggage array
         for (uint256 i = 0; i < baggageIds.length; i++) {
@@ -72,7 +74,6 @@ contract BaggageTracker {
     }
 
     function addBaggageToSecurity(string memory baggageId) public {
-
         require(baggageMapping[baggageId].status == BaggageStatus.CHECK_IN);
 
         baggageMapping[baggageId].status = BaggageStatus.SECURITY;
@@ -84,6 +85,19 @@ contract BaggageTracker {
 
         baggageMapping[baggageId].status = BaggageStatus.BOARDED;
         baggageMapping[baggageId].last_scanned_timestamp = block.timestamp;
+    }
+
+    function getIsBoardingOfficial() public view returns (bool) {
+        if (msg.sender == boardingOfficial) {
+            return true;
+        }
+        return false;
+    }
+
+    function assignBaggageOffcial(address[] memory officials) public {
+        for (uint256 i = 0; i < officials.length; i++) {
+            baggageOfficials.push(officials[i]);
+        }
     }
 
     function getBaggageStatus(string memory baggageId) public view returns (BaggageStatus) {
