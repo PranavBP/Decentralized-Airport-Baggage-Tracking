@@ -1,0 +1,227 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "string[]",
+						"name": "customer_ids",
+						"type": "string[]"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "baggageId",
+						"type": "string"
+					}
+				],
+				"name": "addBaggageToBoarding",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "baggageId",
+						"type": "string"
+					}
+				],
+				"name": "addBaggageToSecurity",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "officials",
+						"type": "address[]"
+					}
+				],
+				"name": "assignBaggageOfficial",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string[]",
+						"name": "baggageIds",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "locations",
+						"type": "string[]"
+					}
+				],
+				"name": "checkInBaggage",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getBaggage",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "id",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "last_scanned_timestamp",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "location",
+								"type": "string"
+							},
+							{
+								"internalType": "enum BaggageTracker.BaggageStatus",
+								"name": "status",
+								"type": "uint8"
+							}
+						],
+						"internalType": "struct BaggageTracker.Baggage[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "baggageId",
+						"type": "string"
+					}
+				],
+				"name": "getBaggageStatus",
+				"outputs": [
+					{
+						"internalType": "enum BaggageTracker.BaggageStatus",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getCustomers",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "id",
+								"type": "string"
+							},
+							{
+								"internalType": "enum BaggageTracker.CustomerStatus",
+								"name": "status",
+								"type": "uint8"
+							}
+						],
+						"internalType": "struct BaggageTracker.Customer[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isBaggageOfficial",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isBoardingOfficial",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/BaggageTracker.sol": "BaggageTracker"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/BaggageTracker.sol": {
+			"keccak256": "0x7c9b8edcf573e58057482f39ced57645e81a28eaf60ac1f7026eed1aee821e47",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://442dfb78d49f1d0c7e45b28764d5a6b2a51e3156c5ec78c970a90a02c325a593",
+				"dweb:/ipfs/QmVSmYqhb5LqaKft7ENc5xncAcGoSXN5sZeM6XUdLuZhsA"
+			]
+		},
+		"hardhat/console.sol": {
+			"keccak256": "0x60b0215121bf25612a6739fb2f1ec35f31ee82e4a8216c032c8243d904ab3aa9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6e29880d33dd479bb046ba306993d26ccb779a4b1d94a046cb3567f22948bb4d",
+				"dweb:/ipfs/QmfTY1qzPt5C63Wc7y6JqfZr5899NRvXYdCpyLzR5FXQic"
+			]
+		}
+	},
+	"version": 1
+}

@@ -32,7 +32,7 @@ contract BaggageTracker {
     Customer[] private customers;
     Baggage[] private baggage;
 
-    mapping (string => Baggage) private baggageMapping;
+    mapping(string => Baggage) private baggageMapping;
 
     //The baggage official is allowed to create a new contract, providing the list of customers as the input
     constructor(string[] memory customer_ids) {
@@ -51,7 +51,6 @@ contract BaggageTracker {
         string[] memory baggageIds,
         string[] memory locations
     ) public {
-
         //Length of baggage IDs and their locations must be equal.
         require(baggageIds.length == locations.length);
 
@@ -59,13 +58,12 @@ contract BaggageTracker {
 
         //Adds the baggage to the baggage array
         for (uint256 i = 0; i < baggageIds.length; i++) {
-
             Baggage memory b = Baggage({
-                    id: baggageIds[i],
-                    last_scanned_timestamp: block.timestamp,
-                    location: locations[i],
-                    status: BaggageStatus.CHECK_IN
-                });
+                id: baggageIds[i],
+                last_scanned_timestamp: block.timestamp,
+                location: locations[i],
+                status: BaggageStatus.CHECK_IN
+            });
 
             baggage.push(b);
 
@@ -87,20 +85,34 @@ contract BaggageTracker {
         baggageMapping[baggageId].last_scanned_timestamp = block.timestamp;
     }
 
-    function getIsBoardingOfficial() public view returns (bool) {
+    function isBoardingOfficial() public view returns (bool) {
         if (msg.sender == boardingOfficial) {
             return true;
         }
         return false;
     }
 
-    function assignBaggageOffcial(address[] memory officials) public {
+    function isBaggageOfficial() public view returns (bool) {
+        for (uint256 i = 0; i < baggageOfficials.length; i++) {
+            if (msg.sender == baggageOfficials[i]) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function assignBaggageOfficial(address[] memory officials) public {
         for (uint256 i = 0; i < officials.length; i++) {
             baggageOfficials.push(officials[i]);
         }
     }
 
-    function getBaggageStatus(string memory baggageId) public view returns (BaggageStatus) {
+    function getBaggageStatus(string memory baggageId)
+        public
+        view
+        returns (BaggageStatus)
+    {
         return baggageMapping[baggageId].status;
     }
 
