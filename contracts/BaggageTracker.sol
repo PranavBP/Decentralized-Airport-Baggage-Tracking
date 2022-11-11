@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 import "hardhat/console.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract BaggageTracker {
     enum CustomerStatus {
@@ -19,10 +20,13 @@ contract BaggageTracker {
         CustomerStatus status;
     }
 
+
     struct Baggage {
         string id;
         uint256 last_scanned_timestamp;
         string location;
+        string[] locationHistory; //history of location when scanned.
+        uint[] timestampHistory; //history of timestamp when scanned.
         BaggageStatus status;
     }
 
@@ -58,12 +62,12 @@ contract BaggageTracker {
 
         //Adds the baggage to the baggage array
         for (uint256 i = 0; i < baggageIds.length; i++) {
-            Baggage memory b = Baggage({
-                id: baggageIds[i],
-                last_scanned_timestamp: block.timestamp,
-                location: locations[i],
-                status: BaggageStatus.CHECK_IN
-            });
+            Baggage memory b; 
+
+            b.id = baggageIds[i];
+            b.last_scanned_timestamp = block.timestamp;
+            b.location = locations[i];
+            b.status = BaggageStatus.CHECK_IN;
 
             baggage.push(b);
 
@@ -71,18 +75,31 @@ contract BaggageTracker {
         }
     }
 
-    function addBaggageToSecurity(string memory baggageId) public {
+
+    function addBaggageToSecurity(string memory baggageId, string memory location) public {
         require(baggageMapping[baggageId].status == BaggageStatus.CHECK_IN);
 
+        uint timestamp = block.timestamp;
+
         baggageMapping[baggageId].status = BaggageStatus.SECURITY;
-        baggageMapping[baggageId].last_scanned_timestamp = block.timestamp;
+        baggageMapping[baggageId].last_scanned_timestamp = timestamp;
+
+        //update the location and timestamp history
+        baggageMapping[baggageId].locationHistory.push(location);
+        baggageMapping[baggageId].timestampHistory.push(timestamp);
     }
 
-    function addBaggageToBoarding(string memory baggageId) public {
+    function addBaggageToBoarding(string memory baggageId, string memory location) public {
         require(baggageMapping[baggageId].status == BaggageStatus.SECURITY);
 
+        uint timestamp = block.timestamp;
+
         baggageMapping[baggageId].status = BaggageStatus.BOARDED;
-        baggageMapping[baggageId].last_scanned_timestamp = block.timestamp;
+        baggageMapping[baggageId].last_scanned_timestamp = timestamp;
+
+        //update the location and timestamp history.
+        baggageMapping[baggageId].locationHistory.push(location);
+        baggageMapping[baggageId].timestampHistory.push(timestamp);
     }
 
     function isBoardingOfficial() public view returns (bool) {

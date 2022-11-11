@@ -22,6 +22,11 @@
 						"internalType": "string",
 						"name": "baggageId",
 						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
 					}
 				],
 				"name": "addBaggageToBoarding",
@@ -34,6 +39,11 @@
 					{
 						"internalType": "string",
 						"name": "baggageId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
 						"type": "string"
 					}
 				],
@@ -93,6 +103,16 @@
 								"internalType": "string",
 								"name": "location",
 								"type": "string"
+							},
+							{
+								"internalType": "string[]",
+								"name": "locationHistory",
+								"type": "string[]"
+							},
+							{
+								"internalType": "uint256[]",
+								"name": "timestampHistory",
+								"type": "uint256[]"
 							},
 							{
 								"internalType": "enum BaggageTracker.BaggageStatus",
@@ -206,12 +226,28 @@
 		"remappings": []
 	},
 	"sources": {
+		"@openzeppelin/contracts/utils/Strings.sol": {
+			"keccak256": "0xa4d1d62251f8574deb032a35fc948386a9b4de74b812d4f545a1ac120486b48a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8c969013129ba9e651a20735ef659fef6d8a1139ea3607bd4b26ddea2d645634",
+				"dweb:/ipfs/QmVhVa6LGuzAcB8qgDtVHRkucn4ihj5UZr8xBLcJkP6ucb"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/Math.sol": {
+			"keccak256": "0xa1e8e83cd0087785df04ac79fb395d9f3684caeaf973d9e2c71caef723a3a5d6",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://33bbf48cc069be677705037ba7520c22b1b622c23b33e1a71495f2d36549d40b",
+				"dweb:/ipfs/Qmct36zWXv3j7LZB83uwbg7TXwnZSN1fqHNDZ93GG98bGz"
+			]
+		},
 		"contracts/BaggageTracker.sol": {
-			"keccak256": "0x7c9b8edcf573e58057482f39ced57645e81a28eaf60ac1f7026eed1aee821e47",
+			"keccak256": "0x5c5fd51cf8255ff7f1950f8ec9bc15b671a41a413bbca0146e87988c7b24700a",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://442dfb78d49f1d0c7e45b28764d5a6b2a51e3156c5ec78c970a90a02c325a593",
-				"dweb:/ipfs/QmVSmYqhb5LqaKft7ENc5xncAcGoSXN5sZeM6XUdLuZhsA"
+				"bzz-raw://efb2f61e7c30fbc00e1d40b673367c90322fa0cc343d0bde9c5e749ea8c92abb",
+				"dweb:/ipfs/QmQ7LyM6UPAvSuBQJrMwCaT2siMyzbPw8j9DTzTVF68ECB"
 			]
 		},
 		"hardhat/console.sol": {
