@@ -33,8 +33,6 @@ contract BaggageTracker {
     address[] private baggageOfficials;
 
     Customer[] private customers;
-    Baggage[] private baggage;
-
     mapping(string => Baggage) private baggageMapping;
 
     //The baggage official is allowed to create a new contract, providing the list of customers as the input
@@ -70,8 +68,6 @@ contract BaggageTracker {
         b.last_scanned_timestamp = block.timestamp;
         b.location = location;
         b.status = BaggageStatus.CHECK_IN;
-
-        baggage.push(b);
 
         baggageMapping[baggageId] = b;
     }
@@ -144,7 +140,7 @@ contract BaggageTracker {
         return customers;
     }
 
-    function getBaggage() public view returns (Baggage[] memory) {
-        return baggage;
+    function getBaggage(string memory baggageId) public view returns (Baggage memory) {
+        return baggageMapping[baggageId];
     }
 }
