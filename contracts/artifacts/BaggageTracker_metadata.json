@@ -68,14 +68,14 @@
 			{
 				"inputs": [
 					{
-						"internalType": "string[]",
-						"name": "baggageIds",
-						"type": "string[]"
+						"internalType": "string",
+						"name": "baggageId",
+						"type": "string"
 					},
 					{
-						"internalType": "string[]",
-						"name": "locations",
-						"type": "string[]"
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
 					}
 				],
 				"name": "checkInBaggage",
@@ -243,11 +243,11 @@
 			]
 		},
 		"contracts/BaggageTracker.sol": {
-			"keccak256": "0x5c5fd51cf8255ff7f1950f8ec9bc15b671a41a413bbca0146e87988c7b24700a",
+			"keccak256": "0xf48d066d386ea6c6b7e4e66d0e7b8350c2eace364716635cddfa085a647d53d9",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://efb2f61e7c30fbc00e1d40b673367c90322fa0cc343d0bde9c5e749ea8c92abb",
-				"dweb:/ipfs/QmQ7LyM6UPAvSuBQJrMwCaT2siMyzbPw8j9DTzTVF68ECB"
+				"bzz-raw://8c3e45b1ef94e953fcb5004e5d4cc8374853baf34641d44ce6c41871d803a635",
+				"dweb:/ipfs/QmXTwdcQCyfhJ6z9TJyKCX88yy7prqnAEoYvfY4Fv9nb55"
 			]
 		},
 		"hardhat/console.sol": {

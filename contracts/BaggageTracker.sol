@@ -20,13 +20,12 @@ contract BaggageTracker {
         CustomerStatus status;
     }
 
-
     struct Baggage {
         string id;
         uint256 last_scanned_timestamp;
         string location;
         string[] locationHistory; //history of location when scanned.
-        uint[] timestampHistory; //history of timestamp when scanned.
+        uint256[] timestampHistory; //history of timestamp when scanned.
         BaggageStatus status;
     }
 
@@ -51,35 +50,39 @@ contract BaggageTracker {
         }
     }
 
-    function checkInBaggage(
-        string[] memory baggageIds,
-        string[] memory locations
-    ) public {
-        //Length of baggage IDs and their locations must be equal.
-        require(baggageIds.length == locations.length);
+    function checkInBaggage(string memory baggageId, string memory location)
+        public
+    {
+        bool _isBaggageOfficial = false;
 
-        require(msg.sender == boardingOfficial);
-
-        //Adds the baggage to the baggage array
-        for (uint256 i = 0; i < baggageIds.length; i++) {
-            Baggage memory b; 
-
-            b.id = baggageIds[i];
-            b.last_scanned_timestamp = block.timestamp;
-            b.location = locations[i];
-            b.status = BaggageStatus.CHECK_IN;
-
-            baggage.push(b);
-
-            baggageMapping[baggageIds[i]] = b;
+        for (uint i = 0; i < baggageOfficials.length; i++){
+            if (baggageOfficials[i] == msg.sender){
+                _isBaggageOfficial = true;
+            }
         }
+
+        require(_isBaggageOfficial);
+
+        //Initialize and add a new bag to the baggage array
+        Baggage memory b;
+
+        b.id = baggageId;
+        b.last_scanned_timestamp = block.timestamp;
+        b.location = location;
+        b.status = BaggageStatus.CHECK_IN;
+
+        baggage.push(b);
+
+        baggageMapping[baggageId] = b;
     }
 
-
-    function addBaggageToSecurity(string memory baggageId, string memory location) public {
+    function addBaggageToSecurity(
+        string memory baggageId,
+        string memory location
+    ) public {
         require(baggageMapping[baggageId].status == BaggageStatus.CHECK_IN);
 
-        uint timestamp = block.timestamp;
+        uint256 timestamp = block.timestamp;
 
         baggageMapping[baggageId].status = BaggageStatus.SECURITY;
         baggageMapping[baggageId].last_scanned_timestamp = timestamp;
@@ -89,10 +92,13 @@ contract BaggageTracker {
         baggageMapping[baggageId].timestampHistory.push(timestamp);
     }
 
-    function addBaggageToBoarding(string memory baggageId, string memory location) public {
+    function addBaggageToBoarding(
+        string memory baggageId,
+        string memory location
+    ) public {
         require(baggageMapping[baggageId].status == BaggageStatus.SECURITY);
 
-        uint timestamp = block.timestamp;
+        uint256 timestamp = block.timestamp;
 
         baggageMapping[baggageId].status = BaggageStatus.BOARDED;
         baggageMapping[baggageId].last_scanned_timestamp = timestamp;
@@ -120,6 +126,7 @@ contract BaggageTracker {
     }
 
     function assignBaggageOfficial(address[] memory officials) public {
+        require(msg.sender == boardingOfficial);
         for (uint256 i = 0; i < officials.length; i++) {
             baggageOfficials.push(officials[i]);
         }
