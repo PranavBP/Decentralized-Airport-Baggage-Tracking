@@ -6,13 +6,7 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [
-					{
-						"internalType": "string[]",
-						"name": "customer_ids",
-						"type": "string[]"
-					}
-				],
+				"inputs": [],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
 			},
@@ -84,6 +78,19 @@
 					}
 				],
 				"name": "addBaggageToSecurity",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "id",
+						"type": "string"
+					}
+				],
+				"name": "addCustomer",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -191,31 +198,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "getCustomers",
-				"outputs": [
-					{
-						"components": [
-							{
-								"internalType": "string",
-								"name": "id",
-								"type": "string"
-							},
-							{
-								"internalType": "enum BaggageTracker.CustomerStatus",
-								"name": "status",
-								"type": "uint8"
-							}
-						],
-						"internalType": "struct BaggageTracker.Customer[]",
-						"name": "",
-						"type": "tuple[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "isBaggageOfficial",
 				"outputs": [
 					{
@@ -230,6 +212,19 @@
 			{
 				"inputs": [],
 				"name": "isBoardingOfficial",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isCustomer",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -285,11 +280,11 @@
 			]
 		},
 		"contracts/BaggageTracker.sol": {
-			"keccak256": "0x5f8783bf46907fd734b730e36f5acc03ae92b85461a929569e0414ff20d0b0bb",
+			"keccak256": "0x51005f5b5a559c72a9740327988240ce60ffd1fb7b1cbf4e9f47ce05798480b5",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://a8b326dcece245e6496a9b350d1fbe1b4be70f1edbfe7e11bcb3d76922e0f9b9",
-				"dweb:/ipfs/QmarKCpmLZAZAGZ3PzMfepjvu6CmcXYVeMLFkVWNjtVQrz"
+				"bzz-raw://d1dee6fabb7b9e84cff2c0e266a1194fd8e7d93eafd9bbb22980666b98858143",
+				"dweb:/ipfs/QmW2HLnZTrfkD67ZHhvVNZ1PYCMvSnKHRNggWh2NMFWx99"
 			]
 		},
 		"hardhat/console.sol": {

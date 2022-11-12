@@ -4,10 +4,6 @@ import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract BaggageTracker {
-    enum CustomerStatus {
-        CHECKIN,
-        BOARDED
-    }
     enum BaggageStatus {
         UNASSIGNED,
         CHECK_IN,
@@ -15,11 +11,6 @@ contract BaggageTracker {
         BOARDED,
         ON_ROUTE,
         DELAYED
-    }
-
-    struct Customer {
-        string id;
-        CustomerStatus status;
     }
 
     struct Baggage {
@@ -34,20 +25,27 @@ contract BaggageTracker {
     address private boardingOfficial;
     address[] private baggageOfficials;
 
-    Customer[] private customers;
     mapping(string => Baggage) private baggageMapping;
+    mapping(address => string) private customers;
 
     //The baggage official is allowed to create a new contract, providing the list of customers as the input
-    constructor(string[] memory customer_ids) {
+    constructor() {
         boardingOfficial = msg.sender;
+    }
 
-        //Initialize the list of customers for this journey
-        for (uint256 i = 0; i < customer_ids.length; i++) {
-            customers.push(
-                //Customer({id: customer_ids[i], status: CustomerStatus.CHECKIN})
-                Customer(customer_ids[i], CustomerStatus.CHECKIN)
-            );
+    function addCustomer(string memory id) public {
+        customers[msg.sender] = id;
+    }
+
+    function isCustomer() public view returns (bool) {
+        if (
+            keccak256(abi.encode(customers[msg.sender])) ==
+            keccak256(abi.encode(""))
+        ) {
+            return false;
         }
+
+        return true;
     }
 
     function checkInBaggage(string memory baggageId, string memory location)
@@ -165,7 +163,6 @@ contract BaggageTracker {
         string memory baggageId,
         string memory location
     ) public {
-        
         bool _isBaggageOfficial = false;
 
         for (uint256 i = 0; i < baggageOfficials.length; i++) {
@@ -216,10 +213,6 @@ contract BaggageTracker {
         returns (BaggageStatus)
     {
         return baggageMapping[baggageId].status;
-    }
-
-    function getCustomers() public view returns (Customer[] memory) {
-        return customers;
     }
 
     function getBaggage(string memory baggageId)
