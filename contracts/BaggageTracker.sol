@@ -38,10 +38,9 @@ contract BaggageTracker {
     }
 
     function isCustomer() public view returns (bool) {
-        if (
-            keccak256(abi.encode(customers[msg.sender])) ==
-            keccak256(abi.encode(""))
-        ) {
+        bytes memory id_bytes = bytes(customers[msg.sender]);
+
+        if(id_bytes.length == 0){
             return false;
         }
 
