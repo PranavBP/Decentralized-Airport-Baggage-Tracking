@@ -9,9 +9,11 @@ contract BaggageTracker {
         BOARDED
     }
     enum BaggageStatus {
+        UNASSIGNED,
         CHECK_IN,
         SECURITY,
         BOARDED,
+        ON_ROUTE,
         DELAYED
     }
 
@@ -53,29 +55,45 @@ contract BaggageTracker {
     {
         bool _isBaggageOfficial = false;
 
-        for (uint i = 0; i < baggageOfficials.length; i++){
-            if (baggageOfficials[i] == msg.sender){
+        for (uint256 i = 0; i < baggageOfficials.length; i++) {
+            if (baggageOfficials[i] == msg.sender) {
                 _isBaggageOfficial = true;
             }
         }
 
         require(_isBaggageOfficial);
+        require(baggageMapping[baggageId].status == BaggageStatus.UNASSIGNED);
+
+        uint256 timestamp = block.timestamp;
 
         //Initialize and add a new bag to the baggage array
         Baggage memory b;
 
         b.id = baggageId;
-        b.last_scanned_timestamp = block.timestamp;
+        b.last_scanned_timestamp = timestamp;
         b.location = location;
         b.status = BaggageStatus.CHECK_IN;
 
         baggageMapping[baggageId] = b;
+
+        baggageMapping[baggageId].locationHistory.push(location);
+        baggageMapping[baggageId].timestampHistory.push(timestamp);
     }
 
     function addBaggageToSecurity(
         string memory baggageId,
         string memory location
     ) public {
+        bool _isBaggageOfficial = false;
+
+        for (uint256 i = 0; i < baggageOfficials.length; i++) {
+            if (baggageOfficials[i] == msg.sender) {
+                _isBaggageOfficial = true;
+            }
+        }
+
+        require(_isBaggageOfficial);
+
         require(baggageMapping[baggageId].status == BaggageStatus.CHECK_IN);
 
         uint256 timestamp = block.timestamp;
@@ -92,11 +110,75 @@ contract BaggageTracker {
         string memory baggageId,
         string memory location
     ) public {
+        bool _isBaggageOfficial = false;
+
+        for (uint256 i = 0; i < baggageOfficials.length; i++) {
+            if (baggageOfficials[i] == msg.sender) {
+                _isBaggageOfficial = true;
+            }
+        }
+
+        require(_isBaggageOfficial);
+
         require(baggageMapping[baggageId].status == BaggageStatus.SECURITY);
 
         uint256 timestamp = block.timestamp;
 
         baggageMapping[baggageId].status = BaggageStatus.BOARDED;
+        baggageMapping[baggageId].last_scanned_timestamp = timestamp;
+
+        //update the location and timestamp history.
+        baggageMapping[baggageId].locationHistory.push(location);
+        baggageMapping[baggageId].timestampHistory.push(timestamp);
+    }
+
+    function addBaggageToOnRoute(
+        string memory baggageId,
+        string memory location
+    ) public {
+        bool _isBaggageOfficial = false;
+
+        for (uint256 i = 0; i < baggageOfficials.length; i++) {
+            if (baggageOfficials[i] == msg.sender) {
+                _isBaggageOfficial = true;
+            }
+        }
+
+        require(_isBaggageOfficial);
+
+        require(
+            baggageMapping[baggageId].status == BaggageStatus.BOARDED ||
+                baggageMapping[baggageId].status == BaggageStatus.ON_ROUTE
+        );
+
+        uint256 timestamp = block.timestamp;
+
+        baggageMapping[baggageId].status = BaggageStatus.ON_ROUTE;
+        baggageMapping[baggageId].last_scanned_timestamp = timestamp;
+
+        //update the location and timestamp history.
+        baggageMapping[baggageId].locationHistory.push(location);
+        baggageMapping[baggageId].timestampHistory.push(timestamp);
+    }
+
+    function addBaggageToDelayed(
+        string memory baggageId,
+        string memory location
+    ) public {
+        
+        bool _isBaggageOfficial = false;
+
+        for (uint256 i = 0; i < baggageOfficials.length; i++) {
+            if (baggageOfficials[i] == msg.sender) {
+                _isBaggageOfficial = true;
+            }
+        }
+
+        require(_isBaggageOfficial);
+
+        uint256 timestamp = block.timestamp;
+
+        baggageMapping[baggageId].status = BaggageStatus.DELAYED;
         baggageMapping[baggageId].last_scanned_timestamp = timestamp;
 
         //update the location and timestamp history.
@@ -140,7 +222,11 @@ contract BaggageTracker {
         return customers;
     }
 
-    function getBaggage(string memory baggageId) public view returns (Baggage memory) {
+    function getBaggage(string memory baggageId)
+        public
+        view
+        returns (Baggage memory)
+    {
         return baggageMapping[baggageId];
     }
 }

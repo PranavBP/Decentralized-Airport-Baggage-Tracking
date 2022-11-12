@@ -47,6 +47,42 @@
 						"type": "string"
 					}
 				],
+				"name": "addBaggageToDelayed",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "baggageId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					}
+				],
+				"name": "addBaggageToOnRoute",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "baggageId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					}
+				],
 				"name": "addBaggageToSecurity",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -84,7 +120,13 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "baggageId",
+						"type": "string"
+					}
+				],
 				"name": "getBaggage",
 				"outputs": [
 					{
@@ -120,9 +162,9 @@
 								"type": "uint8"
 							}
 						],
-						"internalType": "struct BaggageTracker.Baggage[]",
+						"internalType": "struct BaggageTracker.Baggage",
 						"name": "",
-						"type": "tuple[]"
+						"type": "tuple"
 					}
 				],
 				"stateMutability": "view",
@@ -243,11 +285,11 @@
 			]
 		},
 		"contracts/BaggageTracker.sol": {
-			"keccak256": "0xf48d066d386ea6c6b7e4e66d0e7b8350c2eace364716635cddfa085a647d53d9",
+			"keccak256": "0x5f8783bf46907fd734b730e36f5acc03ae92b85461a929569e0414ff20d0b0bb",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://8c3e45b1ef94e953fcb5004e5d4cc8374853baf34641d44ce6c41871d803a635",
-				"dweb:/ipfs/QmXTwdcQCyfhJ6z9TJyKCX88yy7prqnAEoYvfY4Fv9nb55"
+				"bzz-raw://a8b326dcece245e6496a9b350d1fbe1b4be70f1edbfe7e11bcb3d76922e0f9b9",
+				"dweb:/ipfs/QmarKCpmLZAZAGZ3PzMfepjvu6CmcXYVeMLFkVWNjtVQrz"
 			]
 		},
 		"hardhat/console.sol": {
