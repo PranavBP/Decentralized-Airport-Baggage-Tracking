@@ -221,4 +221,8 @@ contract BaggageTracker {
     {
         return baggageMapping[baggageId];
     }
+
+    function getCustomerId() public view returns(string memory){
+        return customers[msg.sender];
+    } 
 }

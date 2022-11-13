@@ -198,6 +198,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "getCustomerId",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "isBaggageOfficial",
 				"outputs": [
 					{
@@ -280,11 +293,11 @@
 			]
 		},
 		"contracts/BaggageTracker.sol": {
-			"keccak256": "0x51005f5b5a559c72a9740327988240ce60ffd1fb7b1cbf4e9f47ce05798480b5",
+			"keccak256": "0x9b0c0589ecae12a9b3fcb275bd55208cd65209664e8fb765c0350cbb5ca3fb6d",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://d1dee6fabb7b9e84cff2c0e266a1194fd8e7d93eafd9bbb22980666b98858143",
-				"dweb:/ipfs/QmW2HLnZTrfkD67ZHhvVNZ1PYCMvSnKHRNggWh2NMFWx99"
+				"bzz-raw://ebc062bdcfdcafc5d29fe3fd0ea77cc8ab8db6c11f7adfe237de492659187c6e",
+				"dweb:/ipfs/QmWwaAcv6jYX9MotZbRHU9KjBVMKdR1Bq89qNsouo3nKNU"
 			]
 		},
 		"hardhat/console.sol": {
