@@ -2,8 +2,9 @@
 pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract BaggageTracker {
+contract BaggageTracker is ERC20{
     enum BaggageStatus {
         UNASSIGNED,
         CHECK_IN,
@@ -29,12 +30,13 @@ contract BaggageTracker {
     mapping(address => string) private customers;
 
     //The baggage official is allowed to create a new contract, providing the list of customers as the input
-    constructor() {
+    constructor() ERC20("Baggagely", "BGLY"){
         boardingOfficial = msg.sender;
     }
 
     function addCustomer(string memory id) public {
         customers[msg.sender] = id;
+        _mint(msg.sender, 100);
     }
 
     function isCustomer() public view returns (bool) {
@@ -77,10 +79,7 @@ contract BaggageTracker {
         baggageMapping[baggageId].timestampHistory.push(timestamp);
     }
 
-    function addBaggageToSecurity(
-        string memory baggageId,
-        string memory location
-    ) public {
+    function addBaggageToSecurity(string memory baggageId, string memory location) public {
         bool _isBaggageOfficial = false;
 
         for (uint256 i = 0; i < baggageOfficials.length; i++) {
@@ -224,5 +223,22 @@ contract BaggageTracker {
 
     function getCustomerId() public view returns(string memory){
         return customers[msg.sender];
-    } 
+    }
+
+    function getBalance() public view returns(uint){
+        return balanceOf(msg.sender);
+    }
+
+    function reward(uint amount) public{
+        require(isCustomer());
+        require(balanceOf(msg.sender) >= amount);
+
+        uint reward_chunk = uint(amount) / uint((baggageOfficials.length + 1));
+
+        transfer(boardingOfficial, reward_chunk);
+
+        for(uint i = 0; i<baggageOfficials.length; i++){
+            transfer(baggageOfficials[i], reward_chunk);
+        }
+    }
 }
