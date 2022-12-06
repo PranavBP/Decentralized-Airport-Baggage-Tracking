@@ -229,7 +229,7 @@ contract BaggageTracker is ERC20{
         return balanceOf(msg.sender);
     }
 
-    function reward(uint amount) public{
+    function reward(uint amount) public payable {
         require(isCustomer());
         require(balanceOf(msg.sender) >= amount);
 
